@@ -5,6 +5,7 @@ import { EventPage } from '../pages/event/event';
 import { ProfilPage } from '../pages/profil/profil';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import {ngEvent} from "../pages/ngEvent/ngEvent";
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { TabsPage } from '../pages/tabs/tabs';
     EventPage,
     ProfilPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    ngEvent
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,7 +25,8 @@ import { TabsPage } from '../pages/tabs/tabs';
     EventPage,
     ProfilPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    ngEvent
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

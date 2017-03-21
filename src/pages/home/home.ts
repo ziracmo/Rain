@@ -1,5 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import { Geolocation } from 'ionic-native';
+import {Geolocation} from 'ionic-native';
+import {ModalController} from "ionic-angular";
+import {ngEvent} from '../ngEvent/ngEvent'
 
 declare var google;
 
@@ -127,14 +129,14 @@ export class HomePage {
     }
   ]
 
-  constructor() {
+  constructor(private modalCtrl: ModalController) {
   }
 
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     this.loadMap();
   }
 
-  loadMap(){
+  loadMap() {
     console.log('[INFO] Loading The map')
     Geolocation.getCurrentPosition().then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -148,7 +150,7 @@ export class HomePage {
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.map.setOptions({styles: this.mapStyle})
-      this.addMarker(position)
+      this.addMarker(position, 'You are here')
 
     }, (err) => {
       console.log(err);
@@ -156,12 +158,12 @@ export class HomePage {
 
   }
 
-  addMarker(position: Position){
+  addMarker(position: Position, content: string) {
     console.log('[INFO] Adding a Marker')
 
     var image = {
       url: '../assets/marker-map.svg',
-      scaledSize : new google.maps.Size(30, 30)
+      scaledSize: new google.maps.Size(30, 30)
     };
 
     let marker = new google.maps.Marker({
@@ -171,16 +173,16 @@ export class HomePage {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       },
-      icon : image
+      icon: image
     });
 
-    let content = "<h4>Information!</h4>";
+    let html = "<h4>" + content + "</h4>";
 
-    this.addInfoWindow(marker, content);
+    this.addInfoWindow(marker, html);
 
   }
 
-  addInfoWindow(marker, content){
+  addInfoWindow(marker, content) {
 
     let infoWindow = new google.maps.InfoWindow({
       content: content
@@ -190,6 +192,12 @@ export class HomePage {
       infoWindow.open(this.map, marker);
     });
 
+  }
+
+  addEvent() {
+    console.log('[INFO] Open the event creation modal')
+    let modal = this.modalCtrl.create(ngEvent);
+    modal.present();
   }
 
 }
