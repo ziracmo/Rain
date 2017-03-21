@@ -137,17 +137,18 @@ export class HomePage {
   loadMap(){
     console.log('[INFO] Loading The map')
     Geolocation.getCurrentPosition().then((position) => {
-      console.log(position)
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
       let mapOptions = {
         center: latLng,
         zoom: 15,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        disableDefaultUI: true,
       }
 
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       this.map.setOptions({styles: this.mapStyle})
+      this.addMarker(position)
 
     }, (err) => {
       console.log(err);
@@ -155,12 +156,22 @@ export class HomePage {
 
   }
 
-  addMarker(){
+  addMarker(position: Position){
+    console.log('[INFO] Adding a Marker')
+
+    var image = {
+      url: '../assets/marker-map.svg',
+      scaledSize : new google.maps.Size(30, 30)
+    };
 
     let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
-      position: this.map.getCenter()
+      position: {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      },
+      icon : image
     });
 
     let content = "<h4>Information!</h4>";
@@ -181,4 +192,11 @@ export class HomePage {
 
   }
 
+}
+
+class Position {
+  coords: {
+    latitude: any;
+    longitude: any;
+  }
 }
