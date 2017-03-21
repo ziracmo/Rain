@@ -1,6 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import { Geolocation } from 'ionic-native';
-import { NavController } from 'ionic-angular';
 
 declare var google;
 
@@ -13,16 +12,15 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController) {
+  constructor() {
   }
 
-  ionViewLoaded(){
+  ionViewDidLoad(){
     this.loadMap();
   }
 
   loadMap(){
     console.log('[INFO] Loading The map')
-    console.log(Geolocation)
     Geolocation.getCurrentPosition().then((position) => {
       console.log(position)
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
