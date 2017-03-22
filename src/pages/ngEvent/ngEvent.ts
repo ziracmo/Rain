@@ -45,7 +45,7 @@ export class ngEvent {
     // Go the last view
     this.dismiss()
   }
-  
+
   /**
    * Return to the last view
    */
@@ -58,9 +58,9 @@ export class ngEvent {
  * The class Event
  */
 class Event {
-  name: string = '';
   sport: string = '';
   date: any;
+  begin: any;
   duration: any;
   missing: string = '0';
   address: string = '';

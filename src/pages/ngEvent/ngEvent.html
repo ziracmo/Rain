@@ -14,27 +14,12 @@
 <ion-content>
   <ion-list>
 
-    <ion-item id="eventName">
+ <!--   <ion-item id="eventName">
       <ion-label fixed>Event name</ion-label>
       <ion-input type="text" [(ngModel)]="event.name">{{event.name}}</ion-input>
-    </ion-item>
+    </ion-item>-->
 
-    <ion-item>
-      <ion-label fixed>City</ion-label>
-      <ion-input type="text" [(ngModel)]="event.city">{{event.city}}</ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label fixed>Adress</ion-label>
-      <ion-input type="text" [(ngModel)]="event.address">{{event.address}}</ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Start Time</ion-label>
-      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="event.date" type="datetime-local"></ion-datetime>
-    </ion-item>
-
-    <ion-item>
+    <ion-item id="sportType">
       <ion-label>Sport</ion-label>
       <ion-select [(ngModel)]="event.sport">
         <ion-option value="basketball">Basketball</ion-option>
@@ -47,8 +32,28 @@
     </ion-item>
 
     <ion-item>
+      <ion-label fixed>City</ion-label>
+      <ion-input type="text" [(ngModel)]="event.city">{{event.city}}</ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Address</ion-label>
+      <ion-input type="text" [(ngModel)]="event.address">{{event.address}}</ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Date</ion-label>
+      <ion-datetime displayFormat="DD-MM-YYYY" pickerFormat="DD-MM-YYYY" [(ngModel)]="event.date" type="datetime-local"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Start Time</ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="event.begin" type="datetime-local"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
       <ion-label>Missing Player</ion-label>
-      <ion-input type="number" placeholder="1" [(ngModel)]="event.missing" right></ion-input>
+      <ion-input type="number" placeholder="1" [(ngModel)]="event.missing"></ion-input>
     </ion-item>
 
     <button ion-button full color="orange" id="creationButton" (click)="create()">Create</button>
