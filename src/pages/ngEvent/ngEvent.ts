@@ -20,28 +20,44 @@ export class ngEvent {
     this.event = new Event();
   }
 
+  /**
+   * Create the new event
+   */
   create() {
+
+    // For the moment it just display a toast which last 2 sec
+
+    // Set the toast properties
     let toast = this.toastCtrl.create({
       message: 'Event was added successfully',
       duration: 2000,
       position: 'bottom'
     });
 
+    // When the toast is dismiss it log it
     toast.onDidDismiss(() => {
       console.log('Dismissed toast');
     });
 
+    // Display the toast
     toast.present();
+
+    // Go the last view
     this.dismiss()
   }
-
+  
+  /**
+   * Return to the last view
+   */
   dismiss() {
     this.viewCtrl.dismiss();
   }
 }
 
+/**
+ * The class Event
+ */
 class Event {
-
   name: string = '';
   sport: string = '';
   date: any;
