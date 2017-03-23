@@ -5,6 +5,8 @@
 import {Component} from "@angular/core";
 import {Platform, NavParams, ViewController, ToastController} from "ionic-angular";
 import * as _ from 'lodash';
+import {GlobalEvents} from "../../../app/providers/events";
+import {Database} from "@ionic/cloud-angular";
 
 @Component({
   templateUrl: './ngEvent.html'
@@ -16,8 +18,11 @@ export class ngEvent {
   constructor(public platform: Platform,
               public params: NavParams,
               public viewCtrl: ViewController,
-              private toastCtrl: ToastController) {
+              private toastCtrl: ToastController,
+              public events: GlobalEvents,
+              public db: Database) {
     this.event = new Event();
+    console.log(events)
   }
 
   /**
@@ -32,6 +37,9 @@ export class ngEvent {
         duration: 2000,
         position: 'top'
       });
+
+      this.sendEvent(this.event)
+
       // Display the toast
       toast.present();
 
@@ -63,6 +71,10 @@ export class ngEvent {
     || _.replace(event.address, ' ', '') == ''
     || _.replace(event.city, ' ', '') == ''
     || _.replace(event.sport, ' ', '') == '')
+  }
+
+  sendEvent(event: Event) {
+    this.db.collection('events').store(event);
   }
 }
 
