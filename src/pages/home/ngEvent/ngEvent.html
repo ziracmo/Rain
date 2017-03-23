@@ -22,23 +22,23 @@
     <ion-item id="sportType">
       <ion-label>Sport</ion-label>
       <ion-select [(ngModel)]="event.sport">
-        <ion-option value="basketball">Basketball</ion-option>
-        <ion-option value="football">Football</ion-option>
-        <ion-option value="handball">Handball</ion-option>
-        <ion-option value="rugby">Rugby</ion-option>
-        <ion-option value="running">Running</ion-option>
-        <ion-option value="tennis">Tennis</ion-option>
+        <ion-option value="Basketball">Basketball</ion-option>
+        <ion-option value="Football">Football</ion-option>
+        <ion-option value="Handball">Handball</ion-option>
+        <ion-option value="Rugby">Rugby</ion-option>
+        <ion-option value="Running">Running</ion-option>
+        <ion-option value="Tennis">Tennis</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>City</ion-label>
-      <ion-input type="text" [(ngModel)]="event.city">{{event.city}}</ion-input>
+      <ion-input type="text" [(ngModel)]="event.position.city">{{event.position.city}}</ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>Address</ion-label>
-      <ion-input type="text" [(ngModel)]="event.address">{{event.address}}</ion-input>
+      <ion-input type="text" [(ngModel)]="event.position.address">{{event.position.address}}</ion-input>
     </ion-item>
 
     <ion-item>

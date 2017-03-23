@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Events, Platform} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 
 import {TabsPage} from '../pages/tabs/tabs';
@@ -12,7 +12,10 @@ import {GlobalEvents} from "./providers/events";
 export class MyApp {
   rootPage = TabsPage;
 
-  constructor(platform: Platform, public db: Database, public events: GlobalEvents) {
+  constructor(platform: Platform,
+              public db: Database,
+              public events: GlobalEvents,
+              public appEvents: Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
 
@@ -26,6 +29,7 @@ export class MyApp {
           console.log();
           this.events.setEvents(dbEvent);
           console.log('[INFO] Getting events : ',this.events.getEvents());
+          this.appEvents.publish('event:update')
         }, (error) => {
           console.error('[ERROR] Getting events : ',error.message);
         });
