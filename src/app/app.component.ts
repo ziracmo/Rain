@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import {Component} from '@angular/core';
+import {Platform} from 'ionic-angular';
+import {StatusBar, Splashscreen} from 'ionic-native';
 
-import { TabsPage } from '../pages/tabs/tabs';
-
+import {TabsPage} from '../pages/tabs/tabs';
+import {Database} from "@ionic/cloud-angular";
+import {GlobalEvents} from "./providers/events";
 
 @Component({
   templateUrl: 'app.html'
@@ -11,10 +12,25 @@ import { TabsPage } from '../pages/tabs/tabs';
 export class MyApp {
   rootPage = TabsPage;
 
-  constructor(platform: Platform) {
+  constructor(platform: Platform, public db: Database, public events: GlobalEvents) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+
+      console.log('[INFO] Connecting to the DB');
+      // Connect to the DB to get the events
+      this.db.connect();
+
+      // get the events collection
+      this.db.collection('events').watch().subscribe(
+        (dbEvent) => {
+          console.log();
+          this.events.setEvents(dbEvent);
+          console.log('[INFO] Getting events : ',this.events.getEvents());
+        }, (error) => {
+          console.error('[ERROR] Getting events : ',error.message);
+        });
+
+      // Init the Ui component
       StatusBar.styleDefault();
       Splashscreen.hide();
     });

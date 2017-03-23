@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Geolocation} from 'ionic-native';
 import {ModalController} from "ionic-angular";
-import {ngEvent} from '../ngEvent/ngEvent'
+import {ngEvent} from './ngEvent/ngEvent'
 
 declare var google;
 
