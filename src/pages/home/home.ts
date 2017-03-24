@@ -96,8 +96,8 @@ export class HomePage {
 
   constructor(private modalCtrl: ModalController,
               public appEvents: Events,
+              public db: Database,
               public events: GlobalEvents) {
-
     // When a event is created
     this.appEvents.subscribe('event:created', (ngEvent, time) => {
       // Add our new event to our global env comming from the db
@@ -125,7 +125,21 @@ export class HomePage {
   }
 
   // When the view is loaded
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+    console.log('[INFO] Connecting to the DB');
+    // Connect to the DB to get the events
+    this.db.connect();
+
+    // get the events collection
+    this.db.collection('events').watch().subscribe(
+      (dbEvent) => {
+        this.events.setEvents(dbEvent);
+        console.log('[INFO] Getting events : ',this.events.getEvents());
+        this.appEvents.publish('event:update')
+      }, (error) => {
+        console.error('[ERROR] Getting events : ',error.message);
+      });
+
     // Then we load the map
     this.loadMap();
   }

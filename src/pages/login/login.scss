@@ -1,0 +1,30 @@
+page-login {
+
+  text-align: center;
+
+  h2 {
+    font-weight: 300;
+    color: color($colors, grey);
+  }
+
+  ion-content.content-ios{
+    position: relative;
+    min-height: 100vh;
+    background-color: color($colors, light);
+
+    button {
+      background-color: color($colors, deepblue);
+      margin-top: 25vh;
+    }
+
+    ion-img {
+      display: inline-block;
+      margin: 30vh auto auto;
+      width: 120px;
+      height: 128px;
+    }
+
+  }
+
+
+}
