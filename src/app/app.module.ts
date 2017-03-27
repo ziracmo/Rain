@@ -9,6 +9,7 @@ import {ngEvent} from "../pages/home/ngEvent/ngEvent";
 import {EventDescriptionPage} from "../pages/event/event-description/event-description";
 import {CloudSettings, CloudModule} from '@ionic/cloud-angular';
 import {GlobalEvents} from './providers/events';
+import {UserData} from "./providers/user";
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -43,7 +44,8 @@ const cloudSettings: CloudSettings = {
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    GlobalEvents
+    GlobalEvents,
+    UserData
   ]
 })
 export class AppModule {

@@ -1,51 +1,30 @@
 import {Component} from '@angular/core';
 
-import {NavController} from 'ionic-angular';
+import {Events, NavController} from 'ionic-angular';
 import {EventDescriptionPage} from "./event-description/event-description";
+import {GlobalEvents} from "../../app/providers/events";
+import {UserData} from "../../app/providers/user";
 
 @Component({
-  selector: 'page-about',
+  selector: 'page-event',
   templateUrl: 'event.html'
 })
 export class EventPage {
 
-  events = [
-    {
-      sport: 'Football',
-      distance: 0.5
-    }, {
-      sport: 'Handball',
-      distance: 2.1
-    }, {
-      sport: 'Basketball',
-      distance: 2.5
-    }, {
-      sport: 'Running',
-      distance: 5.8
-    }, {
-      sport: 'Football',
-      distance: 6.0
-    }, {
-      sport: 'Handball',
-      distance: 6.2
-    }, {
-      sport: 'Basketball',
-      distance: 6.5
-    }, {
-      sport: 'Running',
-      distance: 7.3
-    }, {
-      sport: 'Football',
-      distance: 7.8
-    },
-  ]
+  events;
 
-  constructor(public nav: NavController) {
+  constructor(public nav: NavController,
+              public globalEvents: GlobalEvents,
+              public appEvent: Events) {
 
+    this.events = this.globalEvents.getEvents();
+    this.appEvent.subscribe('event:update', () => {
+      this.events = this.globalEvents.getEvents();
+    })
   }
 
-  openDetailsPage(event){
-    this.nav.push(EventDescriptionPage, { event: event });
+  openDetailsPage(event) {
+    this.nav.push(EventDescriptionPage, {event: event});
   }
 
 }

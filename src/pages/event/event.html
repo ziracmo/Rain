@@ -8,10 +8,12 @@
 
 <ion-content>
 
-  <ion-list inset>
+  <ion-list inset *ngIf="events.length > 0">
     <button ion-item *ngFor="let event of events" class="eventButton" (click)="openDetailsPage(event)" >
-      <span right>{{ event.distance.toString() + "Km " }}</span>{{" - " + event.sport}}
+      <span right>{{ event.distance.toString() + " Km " }}</span>{{" - " + event.sport}}
     </button>
   </ion-list>
+
+  <ion-title *ngIf="events.length == 0">No events yet</ion-title>
 
 </ion-content>

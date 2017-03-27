@@ -5,6 +5,8 @@ import {ngEvent} from './ngEvent/ngEvent'
 import {GlobalEvents} from "../../app/providers/events";
 import {Database} from "@ionic/cloud-angular";
 import {SportEvent} from "./model/sport-event";
+import {UserData} from "../../app/providers/user";
+import {lowerFirst} from 'lodash';
 
 declare var google;
 
@@ -98,7 +100,8 @@ export class HomePage {
   constructor(private modalCtrl: ModalController,
               public appEvents: Events,
               public db: Database,
-              public events: GlobalEvents) {
+              public events: GlobalEvents,
+              public user: UserData) {
     // When a event is created
     this.appEvents.subscribe('event:created', (ngEvent, time) => {
       // Add our new event to our global env comming from the db
@@ -154,7 +157,10 @@ export class HomePage {
     // Get the current user position
     Geolocation.getCurrentPosition().then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
+      this.user.setPosition({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+      })
       // Set the map option to center it to the user position
       let mapOptions = {
         center: latLng,
@@ -216,16 +222,24 @@ export class HomePage {
     });
   }
 
+  /**
+   * add a specif marker on the map for a sport event
+   * @param position the position of the event
+   * @param event the event himself
+   */
   addSportMarker(position: Position, event: SportEvent) {
-    console.log('[INFO] Adding a event Marker in ' + position.coords.latitude + ' : ' + position.coords.longitude)
+    console.log('[INFO] Adding an event Marker in ' + position.coords.latitude + ' : ' + position.coords.longitude)
 
+    let sport = lowerFirst(event.sport);
     // Set the marker image properties
     let image = {
-      url: 'assets/sports/'+ event.sport +'.svg',
+      url: 'assets/sports/' + sport + '.svg',
       scaledSize: new google.maps.Size(28, 28)
     };
 
     let marker = this.getInitMarker(position, image)
+
+    // The content which will be display in the info Window from the map marker
     let html = '<div class="sportInfoWindow">' +
       '<h5>' + event.sport + '</h5>' +
       '<h6>' + event.date + '</h6>' +
