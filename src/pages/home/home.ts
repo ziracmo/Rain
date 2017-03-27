@@ -4,6 +4,7 @@ import {Events, ModalController} from "ionic-angular";
 import {ngEvent} from './ngEvent/ngEvent'
 import {GlobalEvents} from "../../app/providers/events";
 import {Database} from "@ionic/cloud-angular";
+import {SportEvent} from "./model/sport-event";
 
 declare var google;
 
@@ -104,22 +105,22 @@ export class HomePage {
       this.events.setEvents(this.events.getEvents().push(ngEvent));
 
       // Then add a marker for it on the map
-      this.addMarker({
-          coords: {
-            latitude: ngEvent.position.latitude,
-            longitude: ngEvent.position.longitude
-          }
-        }, ngEvent.sport)
+      this.addSportMarker({
+        coords: {
+          latitude: ngEvent.position.latitude,
+          longitude: ngEvent.position.longitude
+        }
+      }, ngEvent)
     });
 
     this.appEvents.subscribe('event:update', () => {
-      for(let event of this.events.getEvents()) {
-        this.addMarker({
+      for (let event of this.events.getEvents()) {
+        this.addSportMarker({
           coords: {
             longitude: event.position.longitude,
             latitude: event.position.latitude
           }
-        }, event.sport)
+        }, event)
       }
     })
   }
@@ -134,10 +135,10 @@ export class HomePage {
     this.db.collection('events').watch().subscribe(
       (dbEvent) => {
         this.events.setEvents(dbEvent);
-        console.log('[INFO] Getting events : ',this.events.getEvents());
+        console.log('[INFO] Getting events : ', this.events.getEvents());
         this.appEvents.publish('event:update')
       }, (error) => {
-        console.error('[ERROR] Getting events : ',error.message);
+        console.error('[ERROR] Getting events : ', error.message);
       });
 
     // Then we load the map
@@ -185,22 +186,12 @@ export class HomePage {
     console.log('[INFO] Adding a Marker in ' + position.coords.latitude + ' : ' + position.coords.longitude)
 
     // Set the marker image properties
-    var image = {
+    let image = {
       url: 'assets/marker-map.svg',
       scaledSize: new google.maps.Size(30, 30)
     };
 
-    // Create a new marker on the map with the correct options and position
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      },
-      icon: image
-    });
-
+    let marker = this.getInitMarker(position, image)
     let html = "<h5>" + content + "</h5>";
 
     // Create the info Window
@@ -225,6 +216,25 @@ export class HomePage {
     });
   }
 
+  addSportMarker(position: Position, event: SportEvent) {
+    console.log('[INFO] Adding a event Marker in ' + position.coords.latitude + ' : ' + position.coords.longitude)
+
+    // Set the marker image properties
+    let image = {
+      url: 'assets/sports/'+ event.sport +'.svg',
+      scaledSize: new google.maps.Size(28, 28)
+    };
+
+    let marker = this.getInitMarker(position, image)
+    let html = '<div class="sportInfoWindow">' +
+      '<h5>' + event.sport + '</h5>' +
+      '<h6>' + event.date + '</h6>' +
+      '</div>'
+
+    // Create the info Window
+    this.addInfoWindow(marker, html);
+  }
+
   /**
    * Toggle the creation event modal
    */
@@ -232,6 +242,21 @@ export class HomePage {
     console.log('[INFO] Open the event creation modal')
     let modal = this.modalCtrl.create(ngEvent);
     modal.present();
+  }
+
+  getInitMarker(position: Position, image) {
+    // Create a new marker on the map with the correct options and position
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      },
+      icon: image
+    });
+
+    return marker
   }
 
 }

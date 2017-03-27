@@ -7,6 +7,7 @@ import {Platform, NavParams, ViewController, ToastController, Events} from "ioni
 import * as _ from 'lodash';
 import {GlobalEvents} from "../../../app/providers/events";
 import {Database} from "@ionic/cloud-angular";
+import {SportEvent} from "../model/sport-event";
 
 declare var google;
 
@@ -15,7 +16,7 @@ declare var google;
 })
 export class ngEvent {
 
-  event: Event;
+  event: SportEvent;
 
   constructor(public platform: Platform,
               public params: NavParams,
@@ -24,7 +25,7 @@ export class ngEvent {
               public events: GlobalEvents,
               public db: Database,
               public appEvents: Events) {
-    this.event = new Event();
+    this.event = new SportEvent();
   }
 
   /**
@@ -80,7 +81,7 @@ export class ngEvent {
    * Add the event in the DB
    * @param event the event to add
    */
-  sendEvent(event: Event) {
+  sendEvent(event: SportEvent) {
     this.db.collection('events').store(event);
   }
 
@@ -127,21 +128,7 @@ export class ngEvent {
   }
 }
 
-/**
- * The class Event
- */
-class Event {
-  sport: string = '';
-  date: any;
-  begin: any;
-  missing: string = '0';
-  position = {
-    address: '',
-    city: '',
-    latitude: '',
-    longitude: ''
-  }
-}
+
 
 class Coordonates {
   latitude: '';
