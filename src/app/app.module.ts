@@ -9,16 +9,10 @@ import {ngEvent} from "../pages/home/ngEvent/ngEvent";
 import {EventDescriptionPage} from "../pages/event/event-description/event-description";
 import {CloudSettings, CloudModule} from '@ionic/cloud-angular';
 import {GlobalEvents} from './providers/events';
-import {LoginPage} from "../pages/login/login";
 
 const cloudSettings: CloudSettings = {
   'core': {
     'app_id': 'bc6d90d8'
-  },
-  'auth': {
-    'facebook': {
-      'scope': ['permission1', 'permission2']
-    }
   }
 };
 
@@ -31,8 +25,7 @@ const cloudSettings: CloudSettings = {
     HomePage,
     TabsPage,
     ngEvent,
-    EventDescriptionPage,
-    LoginPage
+    EventDescriptionPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -46,8 +39,7 @@ const cloudSettings: CloudSettings = {
     HomePage,
     TabsPage,
     ngEvent,
-    EventDescriptionPage,
-    LoginPage
+    EventDescriptionPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
