@@ -22,6 +22,10 @@ export class EventPage {
     })
   }
 
+  /**
+   * Open the informations page for the event selected
+   * @param event the event to display
+   */
   openDetailsPage(event) {
     this.nav.push(EventDescriptionPage, {event: event});
   }

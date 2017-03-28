@@ -158,8 +158,8 @@ export class HomePage {
     Geolocation.getCurrentPosition().then((position) => {
       let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       this.user.setPosition({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
       })
       // Set the map option to center it to the user position
       let mapOptions = {
@@ -240,10 +240,7 @@ export class HomePage {
     let marker = this.getInitMarker(position, image)
 
     // The content which will be display in the info Window from the map marker
-    let html = '<div class="sportInfoWindow">' +
-      '<h5>' + event.sport + '</h5>' +
-      '<h6>' + event.date + '</h6>' +
-      '</div>'
+    let html = this.setInfoWindowsEventContent(event)
 
     // Create the info Window
     this.addInfoWindow(marker, html);
@@ -273,6 +270,13 @@ export class HomePage {
     return marker
   }
 
+  setInfoWindowsEventContent(event: SportEvent) {
+    let html = '<div class="iw-container">' +
+      '<div class="iw-title">' + event.sport + '</div>' +
+      '<div class="iw-content">' + event.date + '</div>' +
+      '</div>';
+    return html;
+  }
 }
 
 /**

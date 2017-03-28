@@ -36,10 +36,23 @@ export class MyApp {
 
   }
 
+  /**
+   * Convert degree to radian
+   * @param deg the degree to convert
+   * @returns {number} the radian
+   */
   deg2rad(deg) {
     return deg * (Math.PI/180);
   }
 
+  /**
+   * Get the distance in kilometer between two particulars
+   * @param latitudeOne the first latitude particular
+   * @param longitudeOne the first longitude particular
+   * @param latitudeTwo the second latitude particular
+   * @param longitudeTwo the second longitude particular
+   * @returns {number} the number in kilometer
+   */
   getDistanceFromLatLonInKm(latitudeOne, longitudeOne, latitudeTwo, longitudeTwo) {
     let earthRadius = 6371; // Radius of the earth in km
     let dLat = this.deg2rad(latitudeTwo-latitudeOne);  // deg2rad below
